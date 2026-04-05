@@ -1,5 +1,27 @@
 <img width="1915" height="993" alt="image" src="https://github.com/user-attachments/assets/63092114-3abd-44f5-aab3-0f4967b93f81" />
 
+## How to Run (Installation & Setup)
+كيفية تشغيل المشروع
+
+1. **Clone the repository** (قم بتحميل المشروع):
+   ```bash
+   git clone https://github.com/yassincodes404/Hospital_Data_Base_project.git
+   cd Hospital_Data_Base_project
+   ```
+
+2. **Run Docker Compose** (شغل بيئة العمل):
+   ```bash
+   docker compose up -d
+   ```
+   *(This will automatically download MySQL and phpMyAdmin, create the database, and inject all tables and sample data!)*
+
+3. **Access the Database** (الدخول لقاعدة البيانات):
+   - Open your browser and go to: **[http://localhost:8080](http://localhost:8080)**
+   - **Username**: `root`
+   - **Password**: `rootpassword`
+
+---
+
 ## Structure
 
 This script creates a complete hospital database with 8 related tables.  
