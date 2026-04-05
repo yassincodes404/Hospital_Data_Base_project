@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: hospital_mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: hospital_db
+      MYSQL_USER: hospital_user
+      MYSQL_PASSWORD: hospital_password
+    ports:
+      - "3306:3306"
+    volumes:
+      # This bind mount saves the database files physically in your project folder
+      # However, for team members it's best to ignore this dynamically tracking directory in Git.
+      - ./mysql_data:/var/lib/mysql
+      # Automatically run these scripts for ANY new user spinning up this project
+      - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: hospital_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+      UPLOAD_LIMIT: 300M
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql

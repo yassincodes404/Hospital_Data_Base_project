@@ -1,0 +1,3 @@
+# Ignore the raw database binaries
+# We distribute the actual database using schema.sql and seed.sql instead!
+mysql_data/
