@@ -1,4 +1,5 @@
-![[Pasted image 20260405210006.png]]
+<img width="1915" height="993" alt="image" src="https://github.com/user-attachments/assets/63092114-3abd-44f5-aab3-0f4967b93f81" />
+
 ## Structure
 
 This script creates a complete hospital database with 8 related tables.  
