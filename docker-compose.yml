@@ -19,6 +19,14 @@ services:
       # Automatically run these scripts for ANY new user spinning up this project
       - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
       - ./seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
+      # Custom script to run these on EVERY start
+      - ./init-db.sh:/usr/local/bin/init-db.sh
+    entrypoint:
+      - sh
+      - -c
+      - |
+        sh /usr/local/bin/init-db.sh &
+        exec docker-entrypoint.sh mysqld
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
