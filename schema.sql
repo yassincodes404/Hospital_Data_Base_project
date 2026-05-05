@@ -1,19 +1,21 @@
 -- =========================
 -- DATABASE
 -- =========================
-CREATE DATABASE hospital_db;
+DROP DATABASE IF EXISTS hospital_db;
+
+CREATE DATABASE IF NOT EXISTS hospital_db;
 USE hospital_db;
 
 -- =========================
 -- TABLES
 -- =========================
 
-CREATE TABLE departments (
+CREATE TABLE IF NOT EXISTS departments (
     department_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100)
 );
 
-CREATE TABLE doctors (
+CREATE TABLE IF NOT EXISTS doctors (
     doctor_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     specialization VARCHAR(100),
@@ -22,21 +24,21 @@ CREATE TABLE doctors (
     REFERENCES departments(department_id)
 );
 
-CREATE TABLE patients (
+CREATE TABLE IF NOT EXISTS patients (
     patient_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     gender VARCHAR(10),
     phone VARCHAR(20)
 );
 
-CREATE TABLE rooms (
+CREATE TABLE IF NOT EXISTS rooms (
     room_id INT AUTO_INCREMENT PRIMARY KEY,
     room_number VARCHAR(10),
     type VARCHAR(20),
     status VARCHAR(20)
 );
 
-CREATE TABLE patient_rooms (
+CREATE TABLE IF NOT EXISTS patient_rooms (
     id INT AUTO_INCREMENT PRIMARY KEY,
     patient_id INT,
     room_id INT,
@@ -48,7 +50,7 @@ CREATE TABLE patient_rooms (
     REFERENCES rooms(room_id)
 );
 
-CREATE TABLE medical_records (
+CREATE TABLE IF NOT EXISTS medical_records (
     record_id INT AUTO_INCREMENT PRIMARY KEY,
     patient_id INT,
     diagnosis TEXT,
@@ -57,7 +59,7 @@ CREATE TABLE medical_records (
     REFERENCES patients(patient_id)
 );
 
-CREATE TABLE appointments (
+CREATE TABLE IF NOT EXISTS appointments (
     appointment_id INT AUTO_INCREMENT PRIMARY KEY,
     patient_id INT,
     doctor_id INT,
@@ -69,7 +71,7 @@ CREATE TABLE appointments (
     REFERENCES doctors(doctor_id)
 );
 
-CREATE TABLE treatments (
+CREATE TABLE IF NOT EXISTS treatments (
     treatment_id INT AUTO_INCREMENT PRIMARY KEY,
     appointment_id INT,
     description TEXT,
@@ -78,7 +80,7 @@ CREATE TABLE treatments (
     REFERENCES appointments(appointment_id)
 );
 
-CREATE TABLE bills (
+CREATE TABLE IF NOT EXISTS bills (
     bill_id INT AUTO_INCREMENT PRIMARY KEY,
     appointment_id INT,
     total_amount DECIMAL(10,2),
@@ -88,8 +90,10 @@ CREATE TABLE bills (
 );
 
 -- =========================
--- SIMPLE PROCEDURE
+-- PROCEDURE
 -- =========================
+DROP PROCEDURE IF EXISTS add_bill;
+
 DELIMITER $$
 
 CREATE PROCEDURE add_bill (
@@ -104,8 +108,10 @@ END $$
 DELIMITER ;
 
 -- =========================
--- SIMPLE TRIGGER
+-- TRIGGER
 -- =========================
+DROP TRIGGER IF EXISTS trg_room_status;
+
 DELIMITER $$
 
 CREATE TRIGGER trg_room_status
@@ -122,6 +128,8 @@ DELIMITER ;
 -- =========================
 -- VIEW 1
 -- =========================
+DROP VIEW IF EXISTS patient_room_view;
+
 CREATE VIEW patient_room_view AS
 SELECT p.name AS patient_name,
        r.room_number,
@@ -135,6 +143,8 @@ ON pr.room_id = r.room_id;
 -- =========================
 -- VIEW 2
 -- =========================
+DROP VIEW IF EXISTS doctor_appointment_view;
+
 CREATE VIEW doctor_appointment_view AS
 SELECT d.name AS doctor_name,
        p.name AS patient_name,
